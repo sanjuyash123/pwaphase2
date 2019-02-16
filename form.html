@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>resume form</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body id="form">
+	<div class="main">
+	<div class="sub">
+		<h1>Career objective</h1>
+		<select id="career" name="career">
+			<option>select career objective</option>
+			<option>to work in an environment where i utilize my skills</option>
+			<option>to work in a reputed company</option>
+		</select>
+		
+	</div>
+	<div class="sub-1">
+		<h1>personal information</h1>
+		<input type="text" name="name" id="name" placeholder="enter your name"><br>
+		<input type="text" name="mobile" id="mobile" placeholder="enter your mobileno"><br>
+		<input type="text" name="email" id="email" placeholder="enter your email-id"><br>
+	</div>
+	<div class="sub-1">
+		<h1>PG details</h1>
+			<label for="pdegree">
+		<select id="pdegree">
+			<option>degree</option>
+			<option>M.TECH</option>
+			<option>MBA</option>
+			<option>M.S</option>
+		</select></label><br>
+		<label for="pinstitute">
+		<input type="text" name="pinstitute" id="pinstitute" placeholder="enter your institute name"></label><br>
+		<label for="ppercentage">
+		<input type="number" name="ppercentage" id="ppercentage" placeholder="enter your percentage"></label><br>
+		<label for="pyop">
+		<input type="number" name="pyop" id="pyop" placeholder="enter your yop"></label><br>
+
+	</div>
+	<div class="sub-1">
+		<h1>graduation details</h1>
+		<label for="gdegree">
+		<select id="gdegree">
+			<option>degree</option>
+			<option>btech</option>
+			<option>degree</option>
+		</select></label><br>
+		<label for="ginstitute">
+		<input type="text" name="ginstitute" id="ginstitute" placeholder="enter your institute name"></label><br>
+		<label for="gpercentage">
+		<input type="number" name="gpercentage" id="gpercentage" placeholder="enter your percentage"></label><br>
+		<label for="gyop">
+		<input type="number" name="gyop" id="gyop" placeholder="enter your yop"></label><br>
+
+	</div>
+	<div class="sub-1">
+		<label for="idegree">
+		<h1>intermediate details</h1>
+		<select id="idegree">
+			<option>group</option>
+			<option>mpc</option>
+			<option>bipc</option>
+			<option>cec</option>
+		</select></label><br>
+		<label for="iinstitute">
+		<input type="text" name="iinstitute" id="iinstitute" placeholder="enter your college name"></label><br>
+		<label for="ipercentage">
+		<input type="number" name="ipercentage" id="ipercentage" placeholder="enter your percentage"></label><br>
+		<label for="iyop">
+		<input type="number" name="iyop" id="iyop" placeholder="enter your yop"></label><br>
+
+	</div>
+	<div class="sub-1">
+		<h1>10th class details</h1>
+		<label for=:"sdegree">
+		<select id="sdegree">
+			<option>board</option>
+			<option>SSC</option>
+			<option>CBSE</option>
+			<option>ICSE</option>
+		</select></label><br>
+		<label for="sinstitute">
+		<input type="text" name="sinstitute" id="sinstitute" placeholder="enter your school name"></label><br>
+	    <label for="spercentage">
+		<input type="number" name="spercentage" id="spercentage" placeholder="enter your cgpa"></label><br>
+		<label for="syop">
+		<input type="number" name="syop" id="syop" placeholder="enter your yop"></label><br>
+
+	</div>
+    </div><br>
+    <button type="Button" id="Button" name="Button" onclick="submitdata()">Submit</button>
+</body>
+</html>
+<script type="text/javascript">
+	function submitdata(){
+    var car=document.getElementById("career").value;
+   	var nam=document.getElementById("name").value;
+   	var mob=document.getElementById("mobile").value;
+   	var mail=document.getElementById("email").value;
+     
+    var pdegree=document.getElementById("pdegree").value;
+   	var pinstitute=document.getElementById("pinstitute").value;
+   	var ppercentage=document.getElementById("ppercentage").value;
+   	var pyop=document.getElementById("pyop").value;
+
+   	var gdegree=document.getElementById("gdegree").value;
+   	var institute=document.getElementById("ginstitute").value;
+   	var percentage=document.getElementById("gpercentage").value;
+   	var yop=document.getElementById("gyop").value;
+
+   	var idegree=document.getElementById("idegree").value;
+   	var college=document.getElementById("iinstitute").value;
+   	var ipercentage=document.getElementById("ipercentage").value;
+   	var iyop=document.getElementById("iyop").value;
+    
+    var sdegree=document.getElementById("sdegree").value;
+   	var school=document.getElementById("sinstitute").value;
+   	var cgpa=document.getElementById("spercentage").value;
+   	var syop=document.getElementById("syop").value;
+
+
+var indexedDB=window.indexedDB || window.mozIndexedDB || window.msIndexedDB || window.webKitIndexedDB;
+var store;
+var open;
+var tx;
+var result;
+   var request=indexedDB.open("database",1);
+   
+   request.onupgradeneeded = function(e) {
+   	open = e.target.result;
+   	store = open.createObjectStore("resumedata",{keyPath:"name"});
+  }
+   request.oneerror = function(e) {
+   	console.log("error"+e);
+
+   }
+
+request.onsuccess = function(e) {
+	open = e.target.result;
+	tx = open.transaction("resumedata",'readwrite');
+	store = tx.objectStore("resumedata");
+	store.put (
+	{   
+	    career:car,
+	    name:nam,
+	    mobile:mob,
+		email:mail,
+	 	education:[
+	 	{
+	 		degree:pdegree,
+	 		institute:pinstitute,
+	 		percentage:ppercentage,
+	 		yop:pyop
+	 	},
+	 	{
+	 		degree:gdegree,
+			institute:ginstitute,
+	 		percentage:gpercentage,
+	 		yop:yop
+	 	},
+	 	{
+	 		degree:idegree,
+	 		institute:iinstitute,
+	 		percentage:ipercentage,
+	 		yop:iyop
+	 	},
+	 	{
+	 		degree:sdegree,
+	 		institute:sinstitute,
+	 		percentage:spercentage,
+	 		yop:syop
+	 	}
+	 	]
+	});
+}
+       window.open("index.html","_self");
+}
+</script>
